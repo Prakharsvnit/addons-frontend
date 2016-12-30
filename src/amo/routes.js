@@ -7,6 +7,7 @@ import AddonReview from './components/AddonReview';
 import App from './containers/App';
 import CategoryList from './containers/CategoryList';
 import CategoryPage from './containers/CategoryPage';
+import FeaturedAddons from './components/FeaturedAddons';
 import LandingPage from './components/LandingPage';
 import Home from './containers/Home';
 import DetailPage from './containers/DetailPage';
@@ -19,6 +20,7 @@ export default (
     <Route path="addon/:slug/" component={DetailPage} />
     <Route path="addon/:slug/review/:reviewId/" component={AddonReview} />
     <Route path=":visibleAddonType/categories/" component={CategoryList} />
+    <Route path=":visibleAddonType/featured/" component={FeaturedAddons} />
     <Route path=":visibleAddonType/:slug/" component={CategoryPage} />
     <Route path="fxa-authenticate" component={HandleLogin} />
     <Route path="search/" component={SearchPage} />
