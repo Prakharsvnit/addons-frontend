@@ -30,7 +30,7 @@ describe('amo/utils', () => {
       store.dispatch(featuredActions.getFeatured({ addonType }));
       const mockApi = sinon.mock(api);
       const entities = sinon.stub();
-      const result = sinon.stub();
+      const result = { results: [] };
 
       mockApi
         .expects('featured')

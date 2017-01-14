@@ -1,7 +1,6 @@
 import {
   FEATURED_GET,
   FEATURED_LOADED,
-  FEATURED_FAILED,
 } from 'core/constants';
 
 
@@ -20,12 +19,5 @@ export function loadFeatured({ addonType, entities, result }) {
   return {
     type: FEATURED_LOADED,
     payload: { addonType, entities, result },
-  };
-}
-
-export function failFeatured({ addonType }) {
-  return {
-    type: FEATURED_FAILED,
-    payload: { addonType },
   };
 }

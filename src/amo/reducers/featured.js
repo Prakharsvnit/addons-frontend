@@ -1,8 +1,4 @@
-import {
-  FEATURED_GET,
-  FEATURED_LOADED,
-  FEATURED_FAILED,
-} from 'core/constants';
+import { FEATURED_GET, FEATURED_LOADED } from 'core/constants';
 
 
 export const initialState = {
@@ -25,8 +21,6 @@ export default function featured(state = initialState, action) {
           payload.entities.addons[slug]
         )),
       };
-    case FEATURED_FAILED:
-      return { ...state, addonType: payload.addonType, loading: false };
     default:
       return state;
   }

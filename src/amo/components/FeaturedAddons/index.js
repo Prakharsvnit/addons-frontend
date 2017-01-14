@@ -49,7 +49,12 @@ export class FeaturedAddonsBase extends React.Component {
 }
 
 export function mapStateToProps(state) {
-  return { hasSearchParams: true, ...state.featured };
+  return {
+    addonType: state.featured.addonType,
+    hasSearchParams: true,
+    loading: state.featured.loading,
+    results: state.featured.results,
+  };
 }
 
 export default compose(

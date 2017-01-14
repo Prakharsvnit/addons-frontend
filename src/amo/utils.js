@@ -2,7 +2,7 @@ import {
   FEATURED_ADDONS_TO_LOAD,
   LANDING_PAGE_ADDON_COUNT,
 } from 'amo/constants';
-import { getFeatured, loadFeatured, failFeatured } from 'amo/actions/featured';
+import { getFeatured, loadFeatured } from 'amo/actions/featured';
 import { getLanding, loadLanding, failLanding } from 'amo/actions/landing';
 import { featured as featuredAPI, search } from 'core/api';
 import { SEARCH_SORT_POPULAR, SEARCH_SORT_TOP_RATED } from 'core/constants';
@@ -16,9 +16,12 @@ export function fetchFeaturedAddons({ addonType, api, dispatch }) {
 
   return featuredAPI({ api, filters })
     .then((response) => dispatch(
-      loadFeatured({ addonType, ...response })
-    ))
-    .catch(() => dispatch(failFeatured({ addonType })));
+      loadFeatured({
+        addonType,
+        entities: response.entities,
+        result: response.result,
+      })
+    ));
 }
 
 export function loadFeaturedAddons({ store: { dispatch, getState }, params }) {

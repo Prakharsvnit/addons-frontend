@@ -1,4 +1,4 @@
-import { getFeatured, loadFeatured, failFeatured } from 'amo/actions/featured';
+import { getFeatured, loadFeatured } from 'amo/actions/featured';
 
 
 describe('FEATURED_GET', () => {
@@ -30,17 +30,5 @@ describe('FEATURED_LOADED', () => {
 
   it('sets the payload', () => {
     assert.deepEqual(action.payload, { addonType: 'theme', ...response });
-  });
-});
-
-describe('FEATURED_FAILED', () => {
-  const action = failFeatured({ addonType: 'extension' });
-
-  it('sets the type', () => {
-    assert.equal(action.type, 'FEATURED_FAILED');
-  });
-
-  it('sets the payload', () => {
-    assert.deepEqual(action.payload, { addonType: 'extension' });
   });
 });
