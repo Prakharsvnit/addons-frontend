@@ -8,24 +8,51 @@ import {
   SEARCH_SORT_POPULAR,
   SEARCH_SORT_TOP_RATED,
 } from 'core/constants';
-import { loadFeaturedAddons, loadLandingAddons } from 'amo/utils';
+import {
+  fetchFeaturedAddons,
+  loadFeaturedAddons,
+  loadLandingAddons,
+} from 'amo/utils';
 
 
 describe('amo/utils', () => {
-  describe('loadFeaturedAddons()', () => {
-    const addonType = ADDON_TYPE_EXTENSION;
-    let ownProps;
+  let ownProps;
 
-    beforeEach(() => {
-      ownProps = {
-        params: {
-          application: 'android',
-          visibleAddonType: 'extensions',
-        },
-      };
-    });
+  beforeEach(() => {
+    ownProps = {
+      params: {
+        application: 'android',
+        visibleAddonType: 'extensions',
+      },
+    };
+  });
 
+  describe('fetchFeaturedAddons()', () => {
     it('requests a large page of featured add-ons', () => {
+      const addonType = ADDON_TYPE_EXTENSION;
+      const dispatch = sinon.stub();
+      const store = createStore({ application: 'android' });
+      store.dispatch(featuredActions.getFeatured({ addonType }));
+      const mockApi = sinon.mock(api);
+      const entities = sinon.stub();
+      const result = { results: [] };
+
+      mockApi
+        .expects('featured')
+        .once()
+        .withArgs({ api: {}, filters: { addonType, page_size: 25 } })
+        .returns(Promise.resolve({ entities, result }));
+
+      return fetchFeaturedAddons({ addonType, api: {}, dispatch })
+        .then(() => {
+          mockApi.verify();
+        });
+    });
+  });
+
+  describe('loadFeaturedAddons()', () => {
+    it('requests a large page of featured add-ons', () => {
+      const addonType = ADDON_TYPE_EXTENSION;
       const store = createStore({ application: 'android' });
       store.dispatch(featuredActions.getFeatured({ addonType }));
       const mockApi = sinon.mock(api);
@@ -46,19 +73,9 @@ describe('amo/utils', () => {
   });
 
   describe('loadLandingAddons()', () => {
-    const addonType = ADDON_TYPE_THEME;
-    let ownProps;
-
-    beforeEach(() => {
-      ownProps = {
-        params: {
-          application: 'android',
-          visibleAddonType: 'themes',
-        },
-      };
-    });
-
     it('calls featured and search APIs to collect results', () => {
+      const addonType = ADDON_TYPE_THEME;
+      ownProps.params.visibleAddonType = 'themes';
       const store = createStore({ application: 'android' });
       store.dispatch(landingActions.getLanding({ addonType }));
       const mockApi = sinon.mock(api);

@@ -22,6 +22,7 @@ export default class SearchPage extends React.Component {
 
   static defaultProps = {
     LinkComponent: Link,
+    count: 0,
     filters: {},
     pathname: '/search/',
     results: [],

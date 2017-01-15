@@ -20,8 +20,12 @@ export class FeaturedAddonsBase extends React.Component {
     results: PropTypes.array,
   }
 
-  headerForAddonType(addonType) {
-    const { i18n } = this.props;
+  static defaultProps = {
+    hasSearchParams: true,
+  }
+
+  headerForAddonType() {
+    const { addonType, i18n } = this.props;
 
     switch (addonType) {
       case ADDON_TYPE_EXTENSION:
@@ -51,7 +55,6 @@ export class FeaturedAddonsBase extends React.Component {
 export function mapStateToProps(state) {
   return {
     addonType: state.featured.addonType,
-    hasSearchParams: true,
     loading: state.featured.loading,
     results: state.featured.results,
   };
